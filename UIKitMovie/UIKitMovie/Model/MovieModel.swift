@@ -1,0 +1,17 @@
+// MovieModel.swift
+// Copyright © RoadMap. All rights reserved.
+
+import Foundation
+
+/// Модель выбора фильмов из АПИ
+struct ResultsMovie: Decodable {
+    let results: [Movie]
+}
+
+/// Модель фильмов
+struct Movie: Decodable {
+    let id: Int?
+    let posterPath: String?
+    let title: String?
+    let overview: String?
+}
