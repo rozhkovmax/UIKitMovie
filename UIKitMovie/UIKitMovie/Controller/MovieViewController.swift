@@ -3,12 +3,12 @@
 
 import UIKit
 
-/// Контроллер представления фильмов
+/// Контроллер представления списка фильмов
 final class MovieViewController: UIViewController {
     // MARK: - Private Constants
 
     private enum Constants {
-        static let titleText = "Movie"
+        static let titleText = "Фильмы"
         static let indentifierMovieCell = "MovieCell"
         static let movieSegmentControlItems = ["В прокате", "Популярное", "Топ рейтинга"]
         static let errorText = "Ошибка"

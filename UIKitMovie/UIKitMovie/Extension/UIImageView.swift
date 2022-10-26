@@ -3,16 +3,25 @@
 
 import UIKit
 
+// MARK: - Private Constants
+
+private enum Constants {
+    static let imageStartName = "https://image.tmdb.org/t/p/w200"
+}
+
 // Расширение для UIImageView
 extension UIImageView {
     func updateImageName(URLAddres: String) {
-        guard let url = URL(string: URLAddres) else { return }
-        DispatchQueue.main.async { [weak self] in
-            if let imageData = try? Data(contentsOf: url) {
-                if let loadedImage = UIImage(data: imageData) {
-                    self?.image = loadedImage
+        let fullUrlImage = "\(Constants.imageStartName)\(URLAddres)"
+        guard let url = URL(string: fullUrlImage) else { return }
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            DispatchQueue.main.async {
+                if let imageData = data {
+                    if let loadedImage = UIImage(data: imageData) {
+                        self.image = loadedImage
+                    }
                 }
             }
-        }
+        }.resume()
     }
 }

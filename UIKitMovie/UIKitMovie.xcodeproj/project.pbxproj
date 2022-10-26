@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9431FAA229094BB100BFF7C3 /* FilmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9431FAA129094BB100BFF7C3 /* FilmViewController.swift */; };
 		9474D81529070B9600C41961 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D81429070B9600C41961 /* AppDelegate.swift */; };
 		9474D81729070B9600C41961 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D81629070B9600C41961 /* SceneDelegate.swift */; };
 		9474D81929070B9600C41961 /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D81829070B9600C41961 /* MovieViewController.swift */; };
@@ -19,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9431FAA129094BB100BFF7C3 /* FilmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmViewController.swift; sourceTree = "<group>"; };
 		9474D81129070B9600C41961 /* UIKitMovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIKitMovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9474D81429070B9600C41961 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9474D81629070B9600C41961 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				9474D81829070B9600C41961 /* MovieViewController.swift */,
+				9431FAA129094BB100BFF7C3 /* FilmViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				9474D82B29075EA900C41961 /* MovieModel.swift in Sources */,
 				9474D81929070B9600C41961 /* MovieViewController.swift in Sources */,
 				9474D83129080FB000C41961 /* MovieTableViewCell.swift in Sources */,
+				9431FAA229094BB100BFF7C3 /* FilmViewController.swift in Sources */,
 				9474D82D2907F69600C41961 /* UIImageView.swift in Sources */,
 				9474D81529070B9600C41961 /* AppDelegate.swift in Sources */,
 				9474D81729070B9600C41961 /* SceneDelegate.swift in Sources */,

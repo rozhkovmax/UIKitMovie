@@ -10,6 +10,7 @@ final class MovieTableViewCell: UITableViewCell {
     private enum Constants {
         static let fatalErrorText = "Критическая ошибка"
         static let imageStartName = "https://image.tmdb.org/t/p/w200"
+        static let fontName = "Helvetica-Bold"
     }
 
     // MARK: Private Visual Component
@@ -17,6 +18,7 @@ final class MovieTableViewCell: UITableViewCell {
     private let movieImageView = UIImageView()
     private let movieTitleLabel = UILabel()
     private let movieOverviewLabel = UILabel()
+    private let movieRaitingLable = UILabel()
 
     // MARK: - Life Cycle
 
@@ -35,7 +37,22 @@ final class MovieTableViewCell: UITableViewCell {
     private func setupUI() {
         createMovieImageView()
         createMovieTitleLabel()
-        createMovieBodyLabel()
+        createMovieOverviewLabel()
+        createMovieRaitingLable()
+    }
+
+    private func createMovieRaitingLable() {
+        contentView.addSubview(movieRaitingLable)
+        movieRaitingLable.translatesAutoresizingMaskIntoConstraints = false
+        movieRaitingLable.bottomAnchor.constraint(equalTo: movieImageView.bottomAnchor).isActive = true
+        movieRaitingLable.rightAnchor.constraint(equalTo: movieImageView.rightAnchor).isActive = true
+        movieRaitingLable.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        movieRaitingLable.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        movieRaitingLable.layer.cornerRadius = 10
+        movieRaitingLable.clipsToBounds = true
+        movieRaitingLable.backgroundColor = .green
+        movieRaitingLable.textAlignment = .center
+        movieRaitingLable.font = UIFont(name: Constants.fontName, size: 15)
     }
 
     private func createMovieImageView() {
@@ -65,7 +82,7 @@ final class MovieTableViewCell: UITableViewCell {
         movieTitleLabel.textAlignment = .center
     }
 
-    private func createMovieBodyLabel() {
+    private func createMovieOverviewLabel() {
         contentView.addSubview(movieOverviewLabel)
         movieOverviewLabel.translatesAutoresizingMaskIntoConstraints = false
         movieOverviewLabel.topAnchor.constraint(equalTo: movieTitleLabel.bottomAnchor, constant: 10).isActive = true
@@ -73,10 +90,11 @@ final class MovieTableViewCell: UITableViewCell {
         movieOverviewLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
         movieOverviewLabel.widthAnchor.constraint(equalTo: movieTitleLabel.widthAnchor).isActive = true
         movieOverviewLabel.backgroundColor = .lightGray
-        movieOverviewLabel.numberOfLines = 0
+        movieOverviewLabel.numberOfLines = 10
         movieOverviewLabel.layer.cornerRadius = 10
         movieOverviewLabel.clipsToBounds = true
-        movieOverviewLabel.adjustsFontSizeToFitWidth = true
+        movieOverviewLabel.lineBreakMode = .byWordWrapping
+        //   movieOverviewLabel.adjustsFontSizeToFitWidth = true
         movieOverviewLabel.textAlignment = .left
     }
 
@@ -85,8 +103,11 @@ final class MovieTableViewCell: UITableViewCell {
     func refrashMovie(_ movie: Movie) {
         movieTitleLabel.text = movie.title
         movieOverviewLabel.text = movie.overview
+        if let reiting = movie.voteAverage {
+            movieRaitingLable.text = String(describing: reiting)
+        }
         if let image = movie.posterPath {
-            movieImageView.updateImageName(URLAddres: Constants.imageStartName + image)
+            movieImageView.updateImageName(URLAddres: image)
         }
     }
 }
