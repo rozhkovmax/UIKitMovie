@@ -9,7 +9,6 @@ final class MovieTableViewCell: UITableViewCell {
 
     private enum Constants {
         static let fatalErrorText = "Критическая ошибка"
-        static let imageStartName = "https://image.tmdb.org/t/p/w200"
         static let fontName = "Helvetica-Bold"
     }
 
@@ -65,6 +64,7 @@ final class MovieTableViewCell: UITableViewCell {
         movieImageView.widthAnchor.constraint(equalToConstant: 180).isActive = true
         movieImageView.layer.cornerRadius = 10
         movieImageView.clipsToBounds = true
+        movieImageView.contentMode = .scaleAspectFit
     }
 
     private func createMovieTitleLabel() {
@@ -94,7 +94,6 @@ final class MovieTableViewCell: UITableViewCell {
         movieOverviewLabel.layer.cornerRadius = 10
         movieOverviewLabel.clipsToBounds = true
         movieOverviewLabel.lineBreakMode = .byWordWrapping
-        //   movieOverviewLabel.adjustsFontSizeToFitWidth = true
         movieOverviewLabel.textAlignment = .left
     }
 

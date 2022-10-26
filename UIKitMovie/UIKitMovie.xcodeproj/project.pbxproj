@@ -17,6 +17,8 @@
 		9474D82B29075EA900C41961 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D82A29075EA900C41961 /* MovieModel.swift */; };
 		9474D82D2907F69600C41961 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D82C2907F69600C41961 /* UIImageView.swift */; };
 		9474D83129080FB000C41961 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D83029080FB000C41961 /* MovieTableViewCell.swift */; };
+		94E3827B29097F5600FAECD1 /* FilmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E3827A29097F5600FAECD1 /* FilmCollectionViewCell.swift */; };
+		94E3827F2909830B00FAECD1 /* FilmCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E3827E2909830B00FAECD1 /* FilmCollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		9474D82A29075EA900C41961 /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
 		9474D82C2907F69600C41961 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		9474D83029080FB000C41961 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
+		94E3827A29097F5600FAECD1 /* FilmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCollectionViewCell.swift; sourceTree = "<group>"; };
+		94E3827E2909830B00FAECD1 /* FilmCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCollectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				9474D83029080FB000C41961 /* MovieTableViewCell.swift */,
+				94E3827A29097F5600FAECD1 /* FilmCollectionViewCell.swift */,
+				94E3827E2909830B00FAECD1 /* FilmCollectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -230,6 +236,8 @@
 				9474D83129080FB000C41961 /* MovieTableViewCell.swift in Sources */,
 				9431FAA229094BB100BFF7C3 /* FilmViewController.swift in Sources */,
 				9474D82D2907F69600C41961 /* UIImageView.swift in Sources */,
+				94E3827B29097F5600FAECD1 /* FilmCollectionViewCell.swift in Sources */,
+				94E3827F2909830B00FAECD1 /* FilmCollectionView.swift in Sources */,
 				9474D81529070B9600C41961 /* AppDelegate.swift in Sources */,
 				9474D81729070B9600C41961 /* SceneDelegate.swift in Sources */,
 			);

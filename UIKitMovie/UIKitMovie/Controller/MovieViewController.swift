@@ -12,6 +12,7 @@ final class MovieViewController: UIViewController {
         static let indentifierMovieCell = "MovieCell"
         static let movieSegmentControlItems = ["В прокате", "Популярное", "Топ рейтинга"]
         static let errorText = "Ошибка"
+        static let backBarButtonItemName = "К списку"
     }
 
     private enum ApiKey {
@@ -44,8 +45,18 @@ final class MovieViewController: UIViewController {
     private func setupUI() {
         createMovieSegmentControl()
         createMovieTableView()
-        title = Constants.titleText
+        createVisualPresentation()
         createMovies(ApiKey.rentalApiKey)
+    }
+
+    private func createVisualPresentation() {
+        title = Constants.titleText
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: Constants.backBarButtonItemName,
+            style: .plain,
+            target: nil,
+            action: nil
+        )
     }
 
     private func createMovies(_ key: String) {
@@ -115,7 +126,8 @@ final class MovieViewController: UIViewController {
 
 extension MovieViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        movies?.results.count ?? 0
+        guard let moviesRow = movies?.results else { return 0 }
+        return moviesRow.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,5 +142,10 @@ extension MovieViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let filmViewController = FilmViewController()
+        navigationController?.pushViewController(filmViewController, animated: true)
     }
 }
