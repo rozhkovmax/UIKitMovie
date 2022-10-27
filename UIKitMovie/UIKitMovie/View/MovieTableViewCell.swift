@@ -10,6 +10,7 @@ final class MovieTableViewCell: UITableViewCell {
     private enum Constants {
         static let fatalErrorText = "Критическая ошибка"
         static let fontName = "Helvetica-Bold"
+//        static let blackColor = UIColor(named: "BlackColorCastom")
     }
 
     // MARK: Private Visual Component
@@ -38,6 +39,7 @@ final class MovieTableViewCell: UITableViewCell {
         createMovieTitleLabel()
         createMovieOverviewLabel()
         createMovieRaitingLable()
+//        contentView.backgroundColor = Constants.blackColor
     }
 
     private func createMovieRaitingLable() {
@@ -93,7 +95,7 @@ final class MovieTableViewCell: UITableViewCell {
         movieOverviewLabel.numberOfLines = 10
         movieOverviewLabel.layer.cornerRadius = 10
         movieOverviewLabel.clipsToBounds = true
-        movieOverviewLabel.lineBreakMode = .byWordWrapping
+        movieOverviewLabel.lineBreakMode = .byTruncatingTail
         movieOverviewLabel.textAlignment = .left
     }
 
@@ -102,8 +104,8 @@ final class MovieTableViewCell: UITableViewCell {
     func refrashMovie(_ movie: Movie) {
         movieTitleLabel.text = movie.title
         movieOverviewLabel.text = movie.overview
-        if let reiting = movie.voteAverage {
-            movieRaitingLable.text = String(describing: reiting)
+        if let rating = movie.voteAverage {
+            movieRaitingLable.text = String(describing: rating)
         }
         if let image = movie.posterPath {
             movieImageView.updateImageName(URLAddres: image)

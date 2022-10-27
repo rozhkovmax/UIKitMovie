@@ -6,7 +6,7 @@ import UIKit
 // MARK: - Private Constants
 
 private enum Constants {
-    static let imageStartName = "https://image.tmdb.org/t/p/w200"
+    static let imageStartName = "https://image.tmdb.org/t/p/w500"
 }
 
 // Расширение для UIImageView

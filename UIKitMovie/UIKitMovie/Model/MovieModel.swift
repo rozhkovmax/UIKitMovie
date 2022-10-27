@@ -15,4 +15,9 @@ struct Movie: Decodable {
     let title: String?
     let overview: String?
     let voteAverage: Double?
+    let releaseDate: String?
+    let popularity: Double?
+    let originalTitle: String?
+    let originalLanguage: String?
+    let backdropPath: String?
 }

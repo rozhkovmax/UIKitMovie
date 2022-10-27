@@ -13,6 +13,7 @@ final class MovieViewController: UIViewController {
         static let movieSegmentControlItems = ["В прокате", "Популярное", "Топ рейтинга"]
         static let errorText = "Ошибка"
         static let backBarButtonItemName = "К списку"
+//        static let blackColor = UIColor(named: "BlackColorCastom")
     }
 
     private enum ApiKey {
@@ -51,12 +52,15 @@ final class MovieViewController: UIViewController {
 
     private func createVisualPresentation() {
         title = Constants.titleText
+        navigationController?.navigationBar
+            .titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: Constants.backBarButtonItemName,
             style: .plain,
             target: nil,
             action: nil
         )
+        view.backgroundColor = .black
     }
 
     private func createMovies(_ key: String) {
@@ -88,6 +92,8 @@ final class MovieViewController: UIViewController {
         movieSegmentControl.widthAnchor.constraint(equalToConstant: 300).isActive = true
         movieSegmentControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
         movieSegmentControl.backgroundColor = .lightGray
+        movieSegmentControl.selectedSegmentTintColor = .yellow
+        movieSegmentControl.tintColor = .white
         movieSegmentControl.selectedSegmentIndex = 0
         movieSegmentControl.addTarget(self, action: #selector(movieSegmentControlAction), for: .valueChanged)
     }
@@ -145,7 +151,9 @@ extension MovieViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let movieId = movies?.results[indexPath.row] else { return }
         let filmViewController = FilmViewController()
+        filmViewController.film = movieId
         navigationController?.pushViewController(filmViewController, animated: true)
     }
 }
