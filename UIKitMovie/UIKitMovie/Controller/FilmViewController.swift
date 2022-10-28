@@ -6,7 +6,7 @@ import UIKit
 /// Контроллер представления фильма
 final class FilmViewController: UIViewController {
     // MARK: - Private Constants
-
+    
     private enum Constants {
         static let dateOfReleaseText = "Дата релиза:"
         static let popularityText = "Популярность:"
@@ -14,27 +14,27 @@ final class FilmViewController: UIViewController {
         static let myUIKitMovieText = "https://github.com/rozhkovmax/UIKitMovie"
         static let rightBarButtonItemImageName = "square.and.arrow.up"
     }
-
+    
     // MARK: Private Visual Component
-
+    
     private let filmImageView = UIImageView()
     private let filmOriginLable = PaddingLabel()
     private let filmFeatureLabel = PaddingLabel()
     private let filmDescriptionLable = PaddingLabel()
-
+    
     // MARK: - Public Properties
-
+    
     var film: Movie?
-
+    
     // MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
-
+    
     // MARK: - Private Methods
-
+    
     private func setupUI() {
         createVisualPresentation()
         createFilmImageView()
@@ -43,7 +43,7 @@ final class FilmViewController: UIViewController {
         createFilmDescriptionLable()
         createTapRecognizer()
     }
-
+    
     private func createVisualPresentation() {
         view.backgroundColor = .black
         title = film?.title
@@ -57,12 +57,12 @@ final class FilmViewController: UIViewController {
             action: #selector(rightBarButtonAction)
         )
     }
-
+    
     private func createTapRecognizer() {
         filmImageView.isUserInteractionEnabled = true
         filmImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
     }
-
+    
     private func createFilmImageView() {
         view.addSubview(filmImageView)
         filmImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -76,11 +76,10 @@ final class FilmViewController: UIViewController {
         filmImageView.contentMode = .scaleToFill
         filmImageView.layer.borderWidth = 1
         filmImageView.layer.borderColor = UIColor.yellow.cgColor
-        if let imageName = film?.backdropPath {
-            filmImageView.updateImageName(URLAddres: imageName)
-        }
+        guard let imageName = film?.backdropPath else { return }
+        filmImageView.updateImageName(URLAddres: imageName)
     }
-
+    
     private func createFilmOriginLable() {
         view.addSubview(filmOriginLable)
         filmOriginLable.translatesAutoresizingMaskIntoConstraints = false
@@ -104,7 +103,7 @@ final class FilmViewController: UIViewController {
             .normal("\(Constants.originalTitleText) \n")
             .bold("\(originTitle) (\(originLanguage.uppercased()))")
     }
-
+    
     private func createFilmFeatureLabel() {
         view.addSubview(filmFeatureLabel)
         filmFeatureLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -127,7 +126,7 @@ final class FilmViewController: UIViewController {
         filmFeatureLabel.attributedText = NSMutableAttributedString()
             .normal("\(Constants.dateOfReleaseText) \(dateOfRelease) \n \(Constants.popularityText) \(popularity)")
     }
-
+    
     private func createFilmDescriptionLable() {
         view.addSubview(filmDescriptionLable)
         filmDescriptionLable.translatesAutoresizingMaskIntoConstraints = false
@@ -147,7 +146,7 @@ final class FilmViewController: UIViewController {
         filmDescriptionLable.layer.borderColor = UIColor.yellow.cgColor
         filmDescriptionLable.textColor = .white
     }
-
+    
     @objc private func rightBarButtonAction() {
         guard let titleText = film?.title else { return }
         let buttonActivityViewController = UIActivityViewController(
@@ -156,10 +155,9 @@ final class FilmViewController: UIViewController {
         )
         present(buttonActivityViewController, animated: true)
     }
-
+    
     @objc private func tapAction(param: UIGestureRecognizer) {
-        // let webViewController = WebViewController()
-        //   present(webViewController, animated: true)
-        //  navigationController?.pushViewController(webViewController, animated: true)
+        let webViewController = WebViewController()
+        navigationController?.pushViewController(webViewController, animated: true)
     }
 }

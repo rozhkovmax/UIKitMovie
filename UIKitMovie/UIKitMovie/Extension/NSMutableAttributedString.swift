@@ -3,7 +3,7 @@
 
 import UIKit
 
-// MARK: NSMutableAttributedString
+// MARK: - NSMutableAttributedString
 
 extension NSMutableAttributedString {
     var boldFont: UIFont { UIFont.boldSystemFont(ofSize: 18) }

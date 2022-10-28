@@ -40,6 +40,10 @@ final class MovieTableViewCell: UITableViewCell {
         createMovieTitleLabel()
         createMovieOverviewLabel()
         createMovieRatingLable()
+        createVisualPresentation()
+    }
+
+    private func createVisualPresentation() {
         contentView.backgroundColor = .black
     }
 
@@ -112,11 +116,9 @@ final class MovieTableViewCell: UITableViewCell {
     func refrashMovie(_ movie: Movie) {
         movieTitleLabel.text = movie.title
         movieOverviewLabel.text = movie.overview
-        if let rating = movie.voteAverage {
-            movieRatingLable.text = String(describing: rating)
-        }
-        if let image = movie.posterPath {
-            movieImageView.updateImageName(URLAddres: image)
-        }
+        guard let rating = movie.voteAverage else { return }
+        movieRatingLable.text = String(describing: rating)
+        guard let image = movie.posterPath else { return }
+        movieImageView.updateImageName(URLAddres: image)
     }
 }

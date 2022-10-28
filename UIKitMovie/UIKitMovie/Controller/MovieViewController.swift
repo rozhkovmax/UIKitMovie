@@ -59,6 +59,8 @@ final class MovieViewController: UIViewController {
 
     private func createVisualPresentation() {
         title = Constants.titleText
+        view.backgroundColor = .black
+        navigationController?.navigationBar.backgroundColor = .black
         navigationController?.navigationBar
             .titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
         navigationItem.backBarButtonItem = UIBarButtonItem(
@@ -67,7 +69,6 @@ final class MovieViewController: UIViewController {
             target: nil,
             action: nil
         )
-        view.backgroundColor = .black
     }
 
     private func createMovies(_ key: String) {
@@ -100,8 +101,8 @@ final class MovieViewController: UIViewController {
         movieSegmentControl.selectedSegmentIndex = 0
         movieSegmentControl.addTarget(self, action: #selector(movieSegmentControlAction), for: .valueChanged)
         let titleTextAttributesNormal = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        let titleTextAttributesSelected = [NSAttributedString.Key.foregroundColor: UIColor.black]
         UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributesNormal, for: .normal)
+        let titleTextAttributesSelected = [NSAttributedString.Key.foregroundColor: UIColor.black]
         UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributesSelected, for: .selected)
     }
 

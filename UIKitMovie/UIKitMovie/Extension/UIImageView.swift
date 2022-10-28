@@ -9,7 +9,8 @@ private enum Constants {
     static let imageStartName = "https://image.tmdb.org/t/p/w500"
 }
 
-// Расширение для UIImageView
+// MARK: - Расширение для UIImageView
+
 extension UIImageView {
     func updateImageName(URLAddres: String) {
         let fullUrlImage = "\(Constants.imageStartName)\(URLAddres)"
