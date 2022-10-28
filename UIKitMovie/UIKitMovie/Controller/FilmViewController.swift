@@ -6,50 +6,53 @@ import UIKit
 /// Контроллер представления фильма
 final class FilmViewController: UIViewController {
     // MARK: - Private Constants
-    
+
     private enum Constants {
         static let dateOfReleaseText = "Дата релиза:"
         static let popularityText = "Популярность:"
         static let originalTitleText = "Оригинальное название:"
         static let myUIKitMovieText = "https://github.com/rozhkovmax/UIKitMovie"
         static let rightBarButtonItemImageName = "square.and.arrow.up"
+        static let blackCustomColor = UIColor(named: "blackCustomColor")
+        static let yellowCustomColor = UIColor(named: "yellowCustomColor")
+        static let whiteCustomColor = UIColor(named: "whiteCustomColor")
     }
-    
+
     // MARK: Private Visual Component
-    
+
     private let filmImageView = UIImageView()
-    private let filmOriginLable = PaddingLabel()
+    private let filmOriginLabel = PaddingLabel()
     private let filmFeatureLabel = PaddingLabel()
-    private let filmDescriptionLable = PaddingLabel()
-    
+    private let filmDescriptionLabel = PaddingLabel()
+
     // MARK: - Public Properties
-    
+
     var film: Movie?
-    
+
     // MARK: - Life Cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
-    
+
     // MARK: - Private Methods
-    
+
     private func setupUI() {
         createVisualPresentation()
         createFilmImageView()
-        createFilmOriginLable()
+        createFilmOriginLabel()
         createFilmFeatureLabel()
-        createFilmDescriptionLable()
+        createFilmDescriptionLabel()
         createTapRecognizer()
     }
-    
+
     private func createVisualPresentation() {
-        view.backgroundColor = .black
+        view.backgroundColor = Constants.blackCustomColor
         title = film?.title
         navigationController?.navigationBar
-            .titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
-        navigationController?.navigationBar.tintColor = UIColor.yellow
+            .titleTextAttributes = [NSAttributedString.Key.foregroundColor: Constants.yellowCustomColor as Any]
+        navigationController?.navigationBar.tintColor = Constants.yellowCustomColor
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: Constants.rightBarButtonItemImageName),
             style: .plain,
@@ -57,12 +60,12 @@ final class FilmViewController: UIViewController {
             action: #selector(rightBarButtonAction)
         )
     }
-    
+
     private func createTapRecognizer() {
         filmImageView.isUserInteractionEnabled = true
         filmImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
     }
-    
+
     private func createFilmImageView() {
         view.addSubview(filmImageView)
         filmImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -70,48 +73,48 @@ final class FilmViewController: UIViewController {
         filmImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
         filmImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
         filmImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
-        filmImageView.backgroundColor = .black
+        filmImageView.backgroundColor = Constants.blackCustomColor
         filmImageView.layer.cornerRadius = 10
         filmImageView.clipsToBounds = true
         filmImageView.contentMode = .scaleToFill
         filmImageView.layer.borderWidth = 1
-        filmImageView.layer.borderColor = UIColor.yellow.cgColor
+        filmImageView.layer.borderColor = Constants.yellowCustomColor?.cgColor
         guard let imageName = film?.backdropPath else { return }
         filmImageView.updateImageName(URLAddres: imageName)
     }
-    
-    private func createFilmOriginLable() {
-        view.addSubview(filmOriginLable)
-        filmOriginLable.translatesAutoresizingMaskIntoConstraints = false
-        filmOriginLable.topAnchor.constraint(equalTo: filmImageView.bottomAnchor, constant: 10).isActive = true
-        filmOriginLable.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
-        filmOriginLable.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
-        filmOriginLable.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        filmOriginLable.backgroundColor = .black
-        filmOriginLable.numberOfLines = 0
-        filmOriginLable.adjustsFontSizeToFitWidth = true
-        filmOriginLable.textAlignment = .center
-        filmOriginLable.layer.cornerRadius = 10
-        filmOriginLable.clipsToBounds = true
-        filmOriginLable.layer.borderWidth = 1
-        filmOriginLable.layer.borderColor = UIColor.yellow.cgColor
-        filmOriginLable.textColor = .white
-        filmOriginLable.padding(top: 0, bottom: 0, left: 10, right: 10)
+
+    private func createFilmOriginLabel() {
+        view.addSubview(filmOriginLabel)
+        filmOriginLabel.translatesAutoresizingMaskIntoConstraints = false
+        filmOriginLabel.topAnchor.constraint(equalTo: filmImageView.bottomAnchor, constant: 10).isActive = true
+        filmOriginLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
+        filmOriginLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
+        filmOriginLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        filmOriginLabel.backgroundColor = Constants.blackCustomColor
+        filmOriginLabel.numberOfLines = 0
+        filmOriginLabel.adjustsFontSizeToFitWidth = true
+        filmOriginLabel.textAlignment = .center
+        filmOriginLabel.layer.cornerRadius = 10
+        filmOriginLabel.clipsToBounds = true
+        filmOriginLabel.layer.borderWidth = 1
+        filmOriginLabel.layer.borderColor = Constants.yellowCustomColor?.cgColor
+        filmOriginLabel.textColor = Constants.whiteCustomColor
+        filmOriginLabel.padding(top: 0, bottom: 0, left: 10, right: 10)
         guard let originTitle = film?.originalTitle,
               let originLanguage = film?.originalLanguage else { return }
-        filmOriginLable.attributedText = NSMutableAttributedString()
+        filmOriginLabel.attributedText = NSMutableAttributedString()
             .normal("\(Constants.originalTitleText) \n")
             .bold("\(originTitle) (\(originLanguage.uppercased()))")
     }
-    
+
     private func createFilmFeatureLabel() {
         view.addSubview(filmFeatureLabel)
         filmFeatureLabel.translatesAutoresizingMaskIntoConstraints = false
-        filmFeatureLabel.topAnchor.constraint(equalTo: filmOriginLable.bottomAnchor, constant: 10).isActive = true
+        filmFeatureLabel.topAnchor.constraint(equalTo: filmOriginLabel.bottomAnchor, constant: 10).isActive = true
         filmFeatureLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
         filmFeatureLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
         filmFeatureLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        filmFeatureLabel.backgroundColor = .black
+        filmFeatureLabel.backgroundColor = Constants.blackCustomColor
         filmFeatureLabel.numberOfLines = 0
         filmFeatureLabel.adjustsFontSizeToFitWidth = true
         filmFeatureLabel.textAlignment = .center
@@ -119,34 +122,34 @@ final class FilmViewController: UIViewController {
         filmFeatureLabel.layer.cornerRadius = 10
         filmFeatureLabel.clipsToBounds = true
         filmFeatureLabel.layer.borderWidth = 1
-        filmFeatureLabel.layer.borderColor = UIColor.yellow.cgColor
-        filmFeatureLabel.textColor = .white
+        filmFeatureLabel.layer.borderColor = Constants.yellowCustomColor?.cgColor
+        filmFeatureLabel.textColor = Constants.whiteCustomColor
         guard let popularity = film?.popularity,
               let dateOfRelease = film?.releaseDate else { return }
         filmFeatureLabel.attributedText = NSMutableAttributedString()
             .normal("\(Constants.dateOfReleaseText) \(dateOfRelease) \n \(Constants.popularityText) \(popularity)")
     }
-    
-    private func createFilmDescriptionLable() {
-        view.addSubview(filmDescriptionLable)
-        filmDescriptionLable.translatesAutoresizingMaskIntoConstraints = false
-        filmDescriptionLable.topAnchor.constraint(equalTo: filmFeatureLabel.bottomAnchor, constant: 10).isActive = true
-        filmDescriptionLable.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
-        filmDescriptionLable.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
-        filmDescriptionLable.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
-        filmDescriptionLable.backgroundColor = .black
-        filmDescriptionLable.numberOfLines = 0
-        filmDescriptionLable.adjustsFontSizeToFitWidth = true
-        filmDescriptionLable.textAlignment = .justified
-        filmDescriptionLable.padding(top: 0, bottom: 0, left: 20, right: 20)
-        filmDescriptionLable.layer.cornerRadius = 10
-        filmDescriptionLable.clipsToBounds = true
-        filmDescriptionLable.text = film?.overview
-        filmDescriptionLable.layer.borderWidth = 1
-        filmDescriptionLable.layer.borderColor = UIColor.yellow.cgColor
-        filmDescriptionLable.textColor = .white
+
+    private func createFilmDescriptionLabel() {
+        view.addSubview(filmDescriptionLabel)
+        filmDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        filmDescriptionLabel.topAnchor.constraint(equalTo: filmFeatureLabel.bottomAnchor, constant: 10).isActive = true
+        filmDescriptionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
+        filmDescriptionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
+        filmDescriptionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
+        filmDescriptionLabel.backgroundColor = Constants.blackCustomColor
+        filmDescriptionLabel.numberOfLines = 0
+        filmDescriptionLabel.adjustsFontSizeToFitWidth = true
+        filmDescriptionLabel.textAlignment = .justified
+        filmDescriptionLabel.padding(top: 0, bottom: 0, left: 20, right: 20)
+        filmDescriptionLabel.layer.cornerRadius = 10
+        filmDescriptionLabel.clipsToBounds = true
+        filmDescriptionLabel.text = film?.overview
+        filmDescriptionLabel.layer.borderWidth = 1
+        filmDescriptionLabel.layer.borderColor = Constants.yellowCustomColor?.cgColor
+        filmDescriptionLabel.textColor = Constants.whiteCustomColor
     }
-    
+
     @objc private func rightBarButtonAction() {
         guard let titleText = film?.title else { return }
         let buttonActivityViewController = UIActivityViewController(
@@ -155,7 +158,7 @@ final class FilmViewController: UIViewController {
         )
         present(buttonActivityViewController, animated: true)
     }
-    
+
     @objc private func tapAction(param: UIGestureRecognizer) {
         let webViewController = WebViewController()
         navigationController?.pushViewController(webViewController, animated: true)

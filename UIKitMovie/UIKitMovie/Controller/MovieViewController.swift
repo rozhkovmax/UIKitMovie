@@ -13,6 +13,10 @@ final class MovieViewController: UIViewController {
         static let movieSegmentControlItems = ["В прокате", "Популярное", "Топ рейтинга"]
         static let errorText = "Ошибка"
         static let backBarButtonItemName = "К списку"
+        static let blackCustomColor = UIColor(named: "blackCustomColor")
+        static let yellowCustomColor = UIColor(named: "yellowCustomColor")
+        static let lightGrayCustomColor = UIColor(named: "lightGrayCustomColor")
+        static let whiteCustomColor = UIColor(named: "whiteCustomColor")
     }
 
     private enum ApiKey {
@@ -28,7 +32,7 @@ final class MovieViewController: UIViewController {
 
     private let movieSegmentControl = UISegmentedControl(items: Constants.movieSegmentControlItems)
     private let movieTableView = UITableView()
-    private var refreshControl = UIRefreshControl()
+    private var movierefreshControl = UIRefreshControl()
 
     // MARK: - Private Properties
 
@@ -52,17 +56,17 @@ final class MovieViewController: UIViewController {
     }
 
     private func createRefreshControl() {
-        movieTableView.addSubview(refreshControl)
-        refreshControl.addTarget(self, action: #selector(handleRefreshAction), for: .valueChanged)
-        refreshControl.tintColor = .yellow
+        movieTableView.addSubview(movierefreshControl)
+        movierefreshControl.addTarget(self, action: #selector(handleRefreshAction), for: .valueChanged)
+        movierefreshControl.tintColor = Constants.yellowCustomColor
     }
 
     private func createVisualPresentation() {
         title = Constants.titleText
-        view.backgroundColor = .black
-        navigationController?.navigationBar.backgroundColor = .black
+        view.backgroundColor = Constants.blackCustomColor
+        navigationController?.navigationBar.backgroundColor = Constants.blackCustomColor
         navigationController?.navigationBar
-            .titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
+            .titleTextAttributes = [NSAttributedString.Key.foregroundColor: Constants.yellowCustomColor as Any]
         navigationItem.backBarButtonItem = UIBarButtonItem(
             title: Constants.backBarButtonItemName,
             style: .plain,
@@ -96,14 +100,16 @@ final class MovieViewController: UIViewController {
         movieSegmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         movieSegmentControl.widthAnchor.constraint(equalToConstant: 300).isActive = true
         movieSegmentControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        movieSegmentControl.backgroundColor = .lightGray
-        movieSegmentControl.selectedSegmentTintColor = .yellow
+        movieSegmentControl.backgroundColor = Constants.lightGrayCustomColor
+        movieSegmentControl.selectedSegmentTintColor = Constants.yellowCustomColor
         movieSegmentControl.selectedSegmentIndex = 0
         movieSegmentControl.addTarget(self, action: #selector(movieSegmentControlAction), for: .valueChanged)
-        let titleTextAttributesNormal = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributesNormal, for: .normal)
-        let titleTextAttributesSelected = [NSAttributedString.Key.foregroundColor: UIColor.black]
-        UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributesSelected, for: .selected)
+        let titleTextAttributesNormal = [NSAttributedString.Key.foregroundColor: Constants.whiteCustomColor]
+        UISegmentedControl.appearance()
+            .setTitleTextAttributes(titleTextAttributesNormal as [NSAttributedString.Key: Any], for: .normal)
+        let titleTextAttributesSelected = [NSAttributedString.Key.foregroundColor: Constants.blackCustomColor]
+        UISegmentedControl.appearance()
+            .setTitleTextAttributes(titleTextAttributesSelected as [NSAttributedString.Key: Any], for: .selected)
     }
 
     private func createMovieTableView() {
@@ -115,12 +121,12 @@ final class MovieViewController: UIViewController {
         movieTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         movieTableView.dataSource = self
         movieTableView.delegate = self
-        movieTableView.backgroundColor = .black
+        movieTableView.backgroundColor = Constants.blackCustomColor
         movieTableView.register(MovieTableViewCell.self, forCellReuseIdentifier: Constants.indentifierMovieCell)
     }
 
     @objc private func handleRefreshAction() {
-        refreshControl.endRefreshing()
+        movierefreshControl.endRefreshing()
     }
 
     @objc private func movieSegmentControlAction(_ sender: UISegmentedControl) {

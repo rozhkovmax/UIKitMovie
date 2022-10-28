@@ -12,6 +12,11 @@ final class MovieTableViewCell: UITableViewCell {
         static let fontNameOne = "Helvetica-Bold"
         static let fontNameTwo = "AmericanTypewriter-Bold"
         static let fontNameThree = "Avenir-Black"
+        static let blackCustomColor = UIColor(named: "blackCustomColor")
+        static let yellowCustomColor = UIColor(named: "yellowCustomColor")
+        static let darkGrayCustomColor = UIColor(named: "darkGrayCustomColor")
+        static let grayCustomColor = UIColor(named: "grayCustomColor")
+        static let lightGrayCustomColor = UIColor(named: "lightGrayCustomColor")
     }
 
     // MARK: Private Visual Component
@@ -19,7 +24,7 @@ final class MovieTableViewCell: UITableViewCell {
     private let movieImageView = UIImageView()
     private let movieTitleLabel = UILabel()
     private let movieOverviewLabel = PaddingLabel()
-    private let movieRatingLable = UILabel()
+    private let movieRatingLabel = UILabel()
 
     // MARK: - Life Cycle
 
@@ -39,27 +44,27 @@ final class MovieTableViewCell: UITableViewCell {
         createMovieImageView()
         createMovieTitleLabel()
         createMovieOverviewLabel()
-        createMovieRatingLable()
+        createMovieRatingLabel()
         createVisualPresentation()
     }
 
     private func createVisualPresentation() {
-        contentView.backgroundColor = .black
+        contentView.backgroundColor = Constants.blackCustomColor
     }
 
-    private func createMovieRatingLable() {
-        contentView.addSubview(movieRatingLable)
-        movieRatingLable.translatesAutoresizingMaskIntoConstraints = false
-        movieRatingLable.centerYAnchor.constraint(equalTo: movieImageView.bottomAnchor).isActive = true
-        movieRatingLable.rightAnchor.constraint(equalTo: movieImageView.rightAnchor).isActive = true
-        movieRatingLable.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        movieRatingLable.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        movieRatingLable.layer.cornerRadius = 10
-        movieRatingLable.clipsToBounds = true
-        movieRatingLable.backgroundColor = .yellow
-        movieRatingLable.textColor = .black
-        movieRatingLable.textAlignment = .center
-        movieRatingLable.font = UIFont(name: Constants.fontNameOne, size: 15)
+    private func createMovieRatingLabel() {
+        contentView.addSubview(movieRatingLabel)
+        movieRatingLabel.translatesAutoresizingMaskIntoConstraints = false
+        movieRatingLabel.centerYAnchor.constraint(equalTo: movieImageView.bottomAnchor).isActive = true
+        movieRatingLabel.rightAnchor.constraint(equalTo: movieImageView.rightAnchor).isActive = true
+        movieRatingLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        movieRatingLabel.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        movieRatingLabel.layer.cornerRadius = 10
+        movieRatingLabel.clipsToBounds = true
+        movieRatingLabel.backgroundColor = Constants.yellowCustomColor
+        movieRatingLabel.textColor = Constants.blackCustomColor
+        movieRatingLabel.textAlignment = .center
+        movieRatingLabel.font = UIFont(name: Constants.fontNameOne, size: 15)
     }
 
     private func createMovieImageView() {
@@ -70,7 +75,7 @@ final class MovieTableViewCell: UITableViewCell {
         movieImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
         movieImageView.heightAnchor.constraint(equalToConstant: 300).isActive = true
         movieImageView.widthAnchor.constraint(equalToConstant: 180).isActive = true
-        movieImageView.layer.shadowColor = UIColor.darkGray.cgColor
+        movieImageView.layer.shadowColor = Constants.darkGrayCustomColor?.cgColor
         movieImageView.layer.shadowOffset = CGSize(width: -6, height: -6)
         movieImageView.layer.shadowOpacity = 10
         movieImageView.layer.shadowRadius = 6
@@ -85,7 +90,7 @@ final class MovieTableViewCell: UITableViewCell {
         movieTitleLabel.leftAnchor.constraint(equalTo: movieImageView.rightAnchor, constant: 20).isActive = true
         movieTitleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20).isActive = true
         movieTitleLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        movieTitleLabel.backgroundColor = .gray
+        movieTitleLabel.backgroundColor = Constants.grayCustomColor
         movieTitleLabel.numberOfLines = 0
         movieTitleLabel.layer.cornerRadius = 10
         movieTitleLabel.clipsToBounds = true
@@ -101,7 +106,7 @@ final class MovieTableViewCell: UITableViewCell {
         movieOverviewLabel.centerXAnchor.constraint(equalTo: movieTitleLabel.centerXAnchor).isActive = true
         movieOverviewLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
         movieOverviewLabel.widthAnchor.constraint(equalTo: movieTitleLabel.widthAnchor).isActive = true
-        movieOverviewLabel.backgroundColor = .lightGray
+        movieOverviewLabel.backgroundColor = Constants.lightGrayCustomColor
         movieOverviewLabel.numberOfLines = 10
         movieOverviewLabel.layer.cornerRadius = 10
         movieOverviewLabel.clipsToBounds = true
@@ -117,7 +122,7 @@ final class MovieTableViewCell: UITableViewCell {
         movieTitleLabel.text = movie.title
         movieOverviewLabel.text = movie.overview
         guard let rating = movie.voteAverage else { return }
-        movieRatingLable.text = String(describing: rating)
+        movieRatingLabel.text = String(describing: rating)
         guard let image = movie.posterPath else { return }
         movieImageView.updateImageName(URLAddres: image)
     }

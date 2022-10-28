@@ -11,16 +11,19 @@ final class WebViewController: UIViewController {
 
     private enum Constants {
         static let webTitleText = "https://www.kinopoisk.ru"
+        static let blackCustomColor = UIColor(named: "blackCustomColor")
+        static let yellowCustomColor = UIColor(named: "yellowCustomColor")
+        static let whiteCustomColor = UIColor(named: "whiteCustomColor")
     }
 
     // MARK: Private Visual Component
 
-    private let toolBar = UIToolbar()
+    private let webToolBar = UIToolbar()
     private let goBackBarButtonItem = UIBarButtonItem(systemItem: .rewind)
     private let goForwardBarButtonItem = UIBarButtonItem(systemItem: .fastForward)
     private let spaceBarButtonItem = UIBarButtonItem(systemItem: .flexibleSpace)
     private let refreshBarButtonItem = UIBarButtonItem(systemItem: .refresh)
-    private let progressView = UIProgressView()
+    private let webProgressView = UIProgressView()
 
     // MARK: - Private Properties
 
@@ -43,18 +46,18 @@ final class WebViewController: UIViewController {
     }
 
     private func createProgressView() {
-        view.addSubview(progressView)
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.leftAnchor.constraint(equalTo: webView.leftAnchor, constant: 140).isActive = true
-        progressView.rightAnchor.constraint(equalTo: webView.rightAnchor, constant: -100).isActive = true
-        progressView.bottomAnchor.constraint(equalTo: webView.bottomAnchor, constant: -23).isActive = true
-        progressView.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        progressView.centerXAnchor.constraint(equalTo: webView.centerXAnchor).isActive = true
+        view.addSubview(webProgressView)
+        webProgressView.translatesAutoresizingMaskIntoConstraints = false
+        webProgressView.leftAnchor.constraint(equalTo: webView.leftAnchor, constant: 140).isActive = true
+        webProgressView.rightAnchor.constraint(equalTo: webView.rightAnchor, constant: -100).isActive = true
+        webProgressView.bottomAnchor.constraint(equalTo: webView.bottomAnchor, constant: -23).isActive = true
+        webProgressView.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        webProgressView.centerXAnchor.constraint(equalTo: webView.centerXAnchor).isActive = true
         observer = webView.observe(\.estimatedProgress, options: [.new]) { _, _ in
-            self.progressView.progress = Float(self.webView.estimatedProgress)
+            self.webProgressView.progress = Float(self.webView.estimatedProgress)
         }
-        progressView.tintColor = .yellow
-        progressView.trackTintColor = .white
+        webProgressView.tintColor = Constants.yellowCustomColor
+        webProgressView.trackTintColor = Constants.whiteCustomColor
     }
 
     private func createWebView() {
@@ -71,14 +74,14 @@ final class WebViewController: UIViewController {
     }
 
     private func createToolBar() {
-        view.addSubview(toolBar)
-        toolBar.translatesAutoresizingMaskIntoConstraints = false
-        toolBar.leftAnchor.constraint(equalTo: webView.leftAnchor).isActive = true
-        toolBar.rightAnchor.constraint(equalTo: webView.rightAnchor).isActive = true
-        toolBar.bottomAnchor.constraint(equalTo: webView.bottomAnchor).isActive = true
-        toolBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        toolBar.isTranslucent = false
-        toolBar.items = [
+        view.addSubview(webToolBar)
+        webToolBar.translatesAutoresizingMaskIntoConstraints = false
+        webToolBar.leftAnchor.constraint(equalTo: webView.leftAnchor).isActive = true
+        webToolBar.rightAnchor.constraint(equalTo: webView.rightAnchor).isActive = true
+        webToolBar.bottomAnchor.constraint(equalTo: webView.bottomAnchor).isActive = true
+        webToolBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        webToolBar.isTranslucent = false
+        webToolBar.items = [
             goBackBarButtonItem,
             goForwardBarButtonItem,
             spaceBarButtonItem,
@@ -87,8 +90,8 @@ final class WebViewController: UIViewController {
         goBackBarButtonItem.action = #selector(goBackItemAction)
         goForwardBarButtonItem.action = #selector(goForwardItemAction)
         refreshBarButtonItem.action = #selector(refreshItemAction)
-        toolBar.barTintColor = .black
-        toolBar.tintColor = .yellow
+        webToolBar.barTintColor = Constants.blackCustomColor
+        webToolBar.tintColor = Constants.yellowCustomColor
     }
 
     @objc private func goBackItemAction() {
