@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		943180DF290B25F80010D03F /* UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943180DE290B25F80010D03F /* UILabel.swift */; };
+		943180E1290B53A70010D03F /* NSMutableAttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943180E0290B53A70010D03F /* NSMutableAttributedString.swift */; };
 		9431FAA229094BB100BFF7C3 /* FilmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9431FAA129094BB100BFF7C3 /* FilmViewController.swift */; };
 		9474D81529070B9600C41961 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D81429070B9600C41961 /* AppDelegate.swift */; };
 		9474D81729070B9600C41961 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D81629070B9600C41961 /* SceneDelegate.swift */; };
@@ -17,11 +19,11 @@
 		9474D82B29075EA900C41961 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D82A29075EA900C41961 /* MovieModel.swift */; };
 		9474D82D2907F69600C41961 /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D82C2907F69600C41961 /* UIImageView.swift */; };
 		9474D83129080FB000C41961 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474D83029080FB000C41961 /* MovieTableViewCell.swift */; };
-		94E3827B29097F5600FAECD1 /* FilmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E3827A29097F5600FAECD1 /* FilmCollectionViewCell.swift */; };
-		94E3827F2909830B00FAECD1 /* FilmCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E3827E2909830B00FAECD1 /* FilmCollectionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		943180DE290B25F80010D03F /* UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabel.swift; sourceTree = "<group>"; };
+		943180E0290B53A70010D03F /* NSMutableAttributedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMutableAttributedString.swift; sourceTree = "<group>"; };
 		9431FAA129094BB100BFF7C3 /* FilmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmViewController.swift; sourceTree = "<group>"; };
 		9474D81129070B9600C41961 /* UIKitMovie.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIKitMovie.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9474D81429070B9600C41961 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -34,8 +36,6 @@
 		9474D82A29075EA900C41961 /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
 		9474D82C2907F69600C41961 /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		9474D83029080FB000C41961 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
-		94E3827A29097F5600FAECD1 /* FilmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCollectionViewCell.swift; sourceTree = "<group>"; };
-		94E3827E2909830B00FAECD1 /* FilmCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCollectionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +103,6 @@
 			isa = PBXGroup;
 			children = (
 				9474D83029080FB000C41961 /* MovieTableViewCell.swift */,
-				94E3827A29097F5600FAECD1 /* FilmCollectionViewCell.swift */,
-				94E3827E2909830B00FAECD1 /* FilmCollectionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -112,7 +110,9 @@
 		9474D83329087EB200C41961 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				943180E0290B53A70010D03F /* NSMutableAttributedString.swift */,
 				9474D82C2907F69600C41961 /* UIImageView.swift */,
+				943180DE290B25F80010D03F /* UILabel.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -236,10 +236,10 @@
 				9474D83129080FB000C41961 /* MovieTableViewCell.swift in Sources */,
 				9431FAA229094BB100BFF7C3 /* FilmViewController.swift in Sources */,
 				9474D82D2907F69600C41961 /* UIImageView.swift in Sources */,
-				94E3827B29097F5600FAECD1 /* FilmCollectionViewCell.swift in Sources */,
-				94E3827F2909830B00FAECD1 /* FilmCollectionView.swift in Sources */,
 				9474D81529070B9600C41961 /* AppDelegate.swift in Sources */,
+				943180DF290B25F80010D03F /* UILabel.swift in Sources */,
 				9474D81729070B9600C41961 /* SceneDelegate.swift in Sources */,
+				943180E1290B53A70010D03F /* NSMutableAttributedString.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,7 +13,6 @@ final class MovieViewController: UIViewController {
         static let movieSegmentControlItems = ["В прокате", "Популярное", "Топ рейтинга"]
         static let errorText = "Ошибка"
         static let backBarButtonItemName = "К списку"
-//        static let blackColor = UIColor(named: "BlackColorCastom")
     }
 
     private enum ApiKey {
@@ -29,6 +28,7 @@ final class MovieViewController: UIViewController {
 
     private let movieSegmentControl = UISegmentedControl(items: Constants.movieSegmentControlItems)
     private let movieTableView = UITableView()
+    private var refreshControl = UIRefreshControl()
 
     // MARK: - Private Properties
 
@@ -48,6 +48,13 @@ final class MovieViewController: UIViewController {
         createMovieTableView()
         createVisualPresentation()
         createMovies(ApiKey.rentalApiKey)
+        createRefreshControl()
+    }
+
+    private func createRefreshControl() {
+        movieTableView.addSubview(refreshControl)
+        refreshControl.addTarget(self, action: #selector(handleRefreshAction), for: .valueChanged)
+        refreshControl.tintColor = .yellow
     }
 
     private func createVisualPresentation() {
@@ -66,12 +73,9 @@ final class MovieViewController: UIViewController {
     private func createMovies(_ key: String) {
         guard let url = URL(string: key) else { return }
         let session = URLSession.shared
-        session.dataTask(with: url) { data, response, error in
-            guard let response = response, let data = data else { return }
-            print(response)
+        session.dataTask(with: url) { data, _, error in
+            guard let data = data else { return }
             do {
-                let json = try JSONSerialization.jsonObject(with: data, options: [])
-                print(json)
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 self.movies = try decoder.decode(ResultsMovie.self, from: data)
@@ -93,9 +97,12 @@ final class MovieViewController: UIViewController {
         movieSegmentControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
         movieSegmentControl.backgroundColor = .lightGray
         movieSegmentControl.selectedSegmentTintColor = .yellow
-        movieSegmentControl.tintColor = .white
         movieSegmentControl.selectedSegmentIndex = 0
         movieSegmentControl.addTarget(self, action: #selector(movieSegmentControlAction), for: .valueChanged)
+        let titleTextAttributesNormal = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let titleTextAttributesSelected = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributesNormal, for: .normal)
+        UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributesSelected, for: .selected)
     }
 
     private func createMovieTableView() {
@@ -107,21 +114,22 @@ final class MovieViewController: UIViewController {
         movieTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         movieTableView.dataSource = self
         movieTableView.delegate = self
-        movieTableView.backgroundColor = .white
+        movieTableView.backgroundColor = .black
         movieTableView.register(MovieTableViewCell.self, forCellReuseIdentifier: Constants.indentifierMovieCell)
+    }
+
+    @objc private func handleRefreshAction() {
+        refreshControl.endRefreshing()
     }
 
     @objc private func movieSegmentControlAction(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             createMovies(ApiKey.rentalApiKey)
-            print("В прокате")
         case 1:
             createMovies(ApiKey.popularApiKey)
-            print("Популярное")
         case 2:
             createMovies(ApiKey.topApiKey)
-            print("Топ рейтинга")
         default:
             break
         }
@@ -151,9 +159,19 @@ extension MovieViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let movieId = movies?.results[indexPath.row] else { return }
+        guard let movie = movies?.results[indexPath.row] else { return }
         let filmViewController = FilmViewController()
-        filmViewController.film = movieId
+        filmViewController.film = movie
         navigationController?.pushViewController(filmViewController, animated: true)
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let degree = 90.0
+        let rotationAngle = CGFloat(degree * Double.pi / 180)
+        let rotationTransform = CATransform3DMakeRotation(rotationAngle, 1, 0, 0)
+        cell.layer.transform = rotationTransform
+        UIView.animate(withDuration: 0.3, delay: 0.3, options: .curveEaseInOut) {
+            cell.layer.transform = CATransform3DIdentity
+        }
     }
 }

@@ -8,22 +8,19 @@ final class FilmViewController: UIViewController {
     // MARK: - Private Constants
 
     private enum Constants {
-        //       static let titleText = "Кино"
         static let dateOfReleaseText = "Дата релиза:"
         static let popularityText = "Популярность:"
         static let originalTitleText = "Оригинальное название:"
+        static let myUIKitMovieText = "https://github.com/rozhkovmax/UIKitMovie"
+        static let rightBarButtonItemImageName = "square.and.arrow.up"
     }
 
     // MARK: Private Visual Component
 
     private let filmImageView = UIImageView()
-    private let filmOriginLable = UILabel()
-    private let filmFeatureLabel = UILabel()
-    private let filmDescriptionLable = UILabel()
-
-    // MARK: - Private Properties
-
-    //   private let filmCollectionView = FilmCollectionView()
+    private let filmOriginLable = PaddingLabel()
+    private let filmFeatureLabel = PaddingLabel()
+    private let filmDescriptionLable = PaddingLabel()
 
     // MARK: - Public Properties
 
@@ -44,14 +41,26 @@ final class FilmViewController: UIViewController {
         createFilmOriginLable()
         createFilmFeatureLabel()
         createFilmDescriptionLable()
-        //    createFilmCollectionView()
+        createTapRecognizer()
     }
 
     private func createVisualPresentation() {
-        view.backgroundColor = .red
+        view.backgroundColor = .black
         title = film?.title
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.gray]
-        navigationController?.navigationBar.tintColor = UIColor.gray
+        navigationController?.navigationBar
+            .titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.yellow]
+        navigationController?.navigationBar.tintColor = UIColor.yellow
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: Constants.rightBarButtonItemImageName),
+            style: .plain,
+            target: self,
+            action: #selector(rightBarButtonAction)
+        )
+    }
+
+    private func createTapRecognizer() {
+        filmImageView.isUserInteractionEnabled = true
+        filmImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction)))
     }
 
     private func createFilmImageView() {
@@ -60,11 +69,13 @@ final class FilmViewController: UIViewController {
         filmImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
         filmImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
         filmImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
-        filmImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        filmImageView.backgroundColor = .yellow
+        filmImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+        filmImageView.backgroundColor = .black
         filmImageView.layer.cornerRadius = 10
         filmImageView.clipsToBounds = true
         filmImageView.contentMode = .scaleToFill
+        filmImageView.layer.borderWidth = 1
+        filmImageView.layer.borderColor = UIColor.yellow.cgColor
         if let imageName = film?.backdropPath {
             filmImageView.updateImageName(URLAddres: imageName)
         }
@@ -77,16 +88,21 @@ final class FilmViewController: UIViewController {
         filmOriginLable.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
         filmOriginLable.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
         filmOriginLable.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        filmOriginLable.backgroundColor = .brown
+        filmOriginLable.backgroundColor = .black
         filmOriginLable.numberOfLines = 0
         filmOriginLable.adjustsFontSizeToFitWidth = true
         filmOriginLable.textAlignment = .center
         filmOriginLable.layer.cornerRadius = 10
         filmOriginLable.clipsToBounds = true
+        filmOriginLable.layer.borderWidth = 1
+        filmOriginLable.layer.borderColor = UIColor.yellow.cgColor
+        filmOriginLable.textColor = .white
+        filmOriginLable.padding(top: 0, bottom: 0, left: 10, right: 10)
         guard let originTitle = film?.originalTitle,
               let originLanguage = film?.originalLanguage else { return }
-        filmOriginLable
-            .text = "\(Constants.originalTitleText) \(originTitle) (\(originLanguage.uppercased()))"
+        filmOriginLable.attributedText = NSMutableAttributedString()
+            .normal("\(Constants.originalTitleText) \n")
+            .bold("\(originTitle) (\(originLanguage.uppercased()))")
     }
 
     private func createFilmFeatureLabel() {
@@ -96,16 +112,20 @@ final class FilmViewController: UIViewController {
         filmFeatureLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
         filmFeatureLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
         filmFeatureLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        filmFeatureLabel.backgroundColor = .brown
+        filmFeatureLabel.backgroundColor = .black
         filmFeatureLabel.numberOfLines = 0
         filmFeatureLabel.adjustsFontSizeToFitWidth = true
         filmFeatureLabel.textAlignment = .center
+        filmFeatureLabel.padding(top: 0, bottom: 0, left: 10, right: 10)
         filmFeatureLabel.layer.cornerRadius = 10
         filmFeatureLabel.clipsToBounds = true
+        filmFeatureLabel.layer.borderWidth = 1
+        filmFeatureLabel.layer.borderColor = UIColor.yellow.cgColor
+        filmFeatureLabel.textColor = .white
         guard let popularity = film?.popularity,
               let dateOfRelease = film?.releaseDate else { return }
-        filmFeatureLabel
-            .text = "\(Constants.dateOfReleaseText) \(dateOfRelease) \(Constants.popularityText) \(popularity)"
+        filmFeatureLabel.attributedText = NSMutableAttributedString()
+            .normal("\(Constants.dateOfReleaseText) \(dateOfRelease) \n \(Constants.popularityText) \(popularity)")
     }
 
     private func createFilmDescriptionLable() {
@@ -114,23 +134,32 @@ final class FilmViewController: UIViewController {
         filmDescriptionLable.topAnchor.constraint(equalTo: filmFeatureLabel.bottomAnchor, constant: 10).isActive = true
         filmDescriptionLable.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
         filmDescriptionLable.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
-        filmDescriptionLable.heightAnchor.constraint(equalToConstant: 300).isActive = true
-        filmDescriptionLable.backgroundColor = .gray
+        filmDescriptionLable.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
+        filmDescriptionLable.backgroundColor = .black
         filmDescriptionLable.numberOfLines = 0
         filmDescriptionLable.adjustsFontSizeToFitWidth = true
-        filmDescriptionLable.textAlignment = .left
+        filmDescriptionLable.textAlignment = .justified
+        filmDescriptionLable.padding(top: 0, bottom: 0, left: 20, right: 20)
         filmDescriptionLable.layer.cornerRadius = 10
         filmDescriptionLable.clipsToBounds = true
         filmDescriptionLable.text = film?.overview
+        filmDescriptionLable.layer.borderWidth = 1
+        filmDescriptionLable.layer.borderColor = UIColor.yellow.cgColor
+        filmDescriptionLable.textColor = .white
     }
 
-//    private func createFilmCollectionView() {
-//        view.addSubview(filmCollectionView)
-//        filmCollectionView.translatesAutoresizingMaskIntoConstraints = false
-//        filmCollectionView.topAnchor.constraint(equalTo: filmDescriptionLable.bottomAnchor, constant: 10)
-//            .isActive = true
-//        filmCollectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-//        filmCollectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-//        filmCollectionView.heightAnchor.constraint(equalToConstant: 180).isActive = true
-//    }
+    @objc private func rightBarButtonAction() {
+        guard let titleText = film?.title else { return }
+        let buttonActivityViewController = UIActivityViewController(
+            activityItems: [titleText],
+            applicationActivities: nil
+        )
+        present(buttonActivityViewController, animated: true)
+    }
+
+    @objc private func tapAction(param: UIGestureRecognizer) {
+        // let webViewController = WebViewController()
+        //   present(webViewController, animated: true)
+        //  navigationController?.pushViewController(webViewController, animated: true)
+    }
 }
