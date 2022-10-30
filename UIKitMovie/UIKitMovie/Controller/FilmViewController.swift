@@ -21,9 +21,9 @@ final class FilmViewController: UIViewController {
     // MARK: Private Visual Component
 
     private let filmImageView = UIImageView()
-    private let filmOriginLabel = PaddingLabel()
-    private let filmFeatureLabel = PaddingLabel()
-    private let filmDescriptionLabel = PaddingLabel()
+    private let filmOriginLabel = CustomLabel()
+    private let filmFeatureLabel = CustomLabel()
+    private let filmDescriptionLabel = CustomLabel()
 
     // MARK: - Public Properties
 
@@ -44,6 +44,10 @@ final class FilmViewController: UIViewController {
         createFilmOriginLabel()
         createFilmFeatureLabel()
         createFilmDescriptionLabel()
+        createFilmImageViewConstraint()
+        createFilmOriginLabelConstraint()
+        createFilmFeatureLabelConstraint()
+        createFilmDescriptionLabelConstraint()
         createTapRecognizer()
     }
 
@@ -68,11 +72,6 @@ final class FilmViewController: UIViewController {
 
     private func createFilmImageView() {
         view.addSubview(filmImageView)
-        filmImageView.translatesAutoresizingMaskIntoConstraints = false
-        filmImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        filmImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
-        filmImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
-        filmImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
         filmImageView.backgroundColor = Constants.blackCustomColor
         filmImageView.layer.cornerRadius = 10
         filmImageView.clipsToBounds = true
@@ -83,13 +82,16 @@ final class FilmViewController: UIViewController {
         filmImageView.updateImageName(URLAddres: imageName)
     }
 
+    private func createFilmImageViewConstraint() {
+        filmImageView.translatesAutoresizingMaskIntoConstraints = false
+        filmImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        filmImageView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
+        filmImageView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
+        filmImageView.heightAnchor.constraint(equalToConstant: 250).isActive = true
+    }
+
     private func createFilmOriginLabel() {
         view.addSubview(filmOriginLabel)
-        filmOriginLabel.translatesAutoresizingMaskIntoConstraints = false
-        filmOriginLabel.topAnchor.constraint(equalTo: filmImageView.bottomAnchor, constant: 10).isActive = true
-        filmOriginLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
-        filmOriginLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
-        filmOriginLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         filmOriginLabel.backgroundColor = Constants.blackCustomColor
         filmOriginLabel.numberOfLines = 0
         filmOriginLabel.adjustsFontSizeToFitWidth = true
@@ -107,13 +109,16 @@ final class FilmViewController: UIViewController {
             .bold("\(originTitle) (\(originLanguage.uppercased()))")
     }
 
+    private func createFilmOriginLabelConstraint() {
+        filmOriginLabel.translatesAutoresizingMaskIntoConstraints = false
+        filmOriginLabel.topAnchor.constraint(equalTo: filmImageView.bottomAnchor, constant: 10).isActive = true
+        filmOriginLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
+        filmOriginLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
+        filmOriginLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+
     private func createFilmFeatureLabel() {
         view.addSubview(filmFeatureLabel)
-        filmFeatureLabel.translatesAutoresizingMaskIntoConstraints = false
-        filmFeatureLabel.topAnchor.constraint(equalTo: filmOriginLabel.bottomAnchor, constant: 10).isActive = true
-        filmFeatureLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
-        filmFeatureLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
-        filmFeatureLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         filmFeatureLabel.backgroundColor = Constants.blackCustomColor
         filmFeatureLabel.numberOfLines = 0
         filmFeatureLabel.adjustsFontSizeToFitWidth = true
@@ -130,13 +135,16 @@ final class FilmViewController: UIViewController {
             .normal("\(Constants.dateOfReleaseText) \(dateOfRelease) \n \(Constants.popularityText) \(popularity)")
     }
 
+    private func createFilmFeatureLabelConstraint() {
+        filmFeatureLabel.translatesAutoresizingMaskIntoConstraints = false
+        filmFeatureLabel.topAnchor.constraint(equalTo: filmOriginLabel.bottomAnchor, constant: 10).isActive = true
+        filmFeatureLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
+        filmFeatureLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
+        filmFeatureLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+
     private func createFilmDescriptionLabel() {
         view.addSubview(filmDescriptionLabel)
-        filmDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        filmDescriptionLabel.topAnchor.constraint(equalTo: filmFeatureLabel.bottomAnchor, constant: 10).isActive = true
-        filmDescriptionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
-        filmDescriptionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
-        filmDescriptionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
         filmDescriptionLabel.backgroundColor = Constants.blackCustomColor
         filmDescriptionLabel.numberOfLines = 0
         filmDescriptionLabel.adjustsFontSizeToFitWidth = true
@@ -148,6 +156,14 @@ final class FilmViewController: UIViewController {
         filmDescriptionLabel.layer.borderWidth = 1
         filmDescriptionLabel.layer.borderColor = Constants.yellowCustomColor?.cgColor
         filmDescriptionLabel.textColor = Constants.whiteCustomColor
+    }
+
+    private func createFilmDescriptionLabelConstraint() {
+        filmDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        filmDescriptionLabel.topAnchor.constraint(equalTo: filmFeatureLabel.bottomAnchor, constant: 10).isActive = true
+        filmDescriptionLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 5).isActive = true
+        filmDescriptionLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -5).isActive = true
+        filmDescriptionLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
     }
 
     @objc private func rightBarButtonAction() {

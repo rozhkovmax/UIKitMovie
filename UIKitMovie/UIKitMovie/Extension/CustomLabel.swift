@@ -1,9 +1,10 @@
-// UILabel.swift
+// CustomLabel.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
+
 /// Добавляем отсутпы в Label
-final class PaddingLabel: UILabel {
+final class CustomLabel: UILabel {
     // MARK: - Private Properties
 
     private var insets = UIEdgeInsets.zero

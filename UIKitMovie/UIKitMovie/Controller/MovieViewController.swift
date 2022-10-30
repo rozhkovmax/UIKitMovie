@@ -19,12 +19,12 @@ final class MovieViewController: UIViewController {
         static let whiteCustomColor = UIColor(named: "whiteCustomColor")
     }
 
-    private enum ApiKey {
-        static let rentalApiKey =
+    private enum CompleteQueryString {
+        static let rentalQueryString =
             "https://api.themoviedb.org/3/movie/upcoming?api_key=b6abe1b1835ab9f0603050760032a03a&language=ru-RU&page=1"
-        static let popularApiKey =
+        static let popularQueryString =
             "https://api.themoviedb.org/3/movie/popular?api_key=b6abe1b1835ab9f0603050760032a03a&language=ru-RU&page=1"
-        static let topApiKey =
+        static let topQueryString =
             "https://api.themoviedb.org/3/movie/top_rated?api_key=b6abe1b1835ab9f0603050760032a03a&language=ru-RU&page=1"
     }
 
@@ -32,7 +32,7 @@ final class MovieViewController: UIViewController {
 
     private let movieSegmentControl = UISegmentedControl(items: Constants.movieSegmentControlItems)
     private let movieTableView = UITableView()
-    private var movierefreshControl = UIRefreshControl()
+    private let movierefreshControl = UIRefreshControl()
 
     // MARK: - Private Properties
 
@@ -51,8 +51,10 @@ final class MovieViewController: UIViewController {
         createMovieSegmentControl()
         createMovieTableView()
         createVisualPresentation()
-        createMovies(ApiKey.rentalApiKey)
+        getMovies(CompleteQueryString.rentalQueryString)
         createRefreshControl()
+        createMovieSegmentControlConstraint()
+        createMovieTableViewConstraint()
     }
 
     private func createRefreshControl() {
@@ -75,7 +77,7 @@ final class MovieViewController: UIViewController {
         )
     }
 
-    private func createMovies(_ key: String) {
+    private func getMovies(_ key: String) {
         guard let url = URL(string: key) else { return }
         let session = URLSession.shared
         session.dataTask(with: url) { data, _, error in
@@ -95,11 +97,6 @@ final class MovieViewController: UIViewController {
 
     private func createMovieSegmentControl() {
         view.addSubview(movieSegmentControl)
-        movieSegmentControl.translatesAutoresizingMaskIntoConstraints = false
-        movieSegmentControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        movieSegmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        movieSegmentControl.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        movieSegmentControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
         movieSegmentControl.backgroundColor = Constants.lightGrayCustomColor
         movieSegmentControl.selectedSegmentTintColor = Constants.yellowCustomColor
         movieSegmentControl.selectedSegmentIndex = 0
@@ -112,17 +109,28 @@ final class MovieViewController: UIViewController {
             .setTitleTextAttributes(titleTextAttributesSelected as [NSAttributedString.Key: Any], for: .selected)
     }
 
+    private func createMovieSegmentControlConstraint() {
+        movieSegmentControl.translatesAutoresizingMaskIntoConstraints = false
+        movieSegmentControl.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        movieSegmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        movieSegmentControl.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        movieSegmentControl.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+
     private func createMovieTableView() {
         view.addSubview(movieTableView)
+        movieTableView.dataSource = self
+        movieTableView.delegate = self
+        movieTableView.backgroundColor = Constants.blackCustomColor
+        movieTableView.register(MovieTableViewCell.self, forCellReuseIdentifier: Constants.indentifierMovieCell)
+    }
+
+    private func createMovieTableViewConstraint() {
         movieTableView.translatesAutoresizingMaskIntoConstraints = false
         movieTableView.topAnchor.constraint(equalTo: movieSegmentControl.bottomAnchor, constant: 20).isActive = true
         movieTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         movieTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         movieTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        movieTableView.dataSource = self
-        movieTableView.delegate = self
-        movieTableView.backgroundColor = Constants.blackCustomColor
-        movieTableView.register(MovieTableViewCell.self, forCellReuseIdentifier: Constants.indentifierMovieCell)
     }
 
     @objc private func handleRefreshAction() {
@@ -132,11 +140,11 @@ final class MovieViewController: UIViewController {
     @objc private func movieSegmentControlAction(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            createMovies(ApiKey.rentalApiKey)
+            getMovies(CompleteQueryString.rentalQueryString)
         case 1:
-            createMovies(ApiKey.popularApiKey)
+            getMovies(CompleteQueryString.popularQueryString)
         case 2:
-            createMovies(ApiKey.topApiKey)
+            getMovies(CompleteQueryString.topQueryString)
         default:
             break
         }
@@ -147,7 +155,7 @@ final class MovieViewController: UIViewController {
 
 extension MovieViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let moviesRow = movies?.results else { return 0 }
+        guard let moviesRow = movies?.movies else { return 0 }
         return moviesRow.count
     }
 
@@ -156,7 +164,7 @@ extension MovieViewController: UITableViewDataSource, UITableViewDelegate {
             withIdentifier: Constants.indentifierMovieCell,
             for: indexPath
         ) as? MovieTableViewCell else { return UITableViewCell() }
-        guard let item = movies?.results[indexPath.row] else { return UITableViewCell() }
+        guard let item = movies?.movies[indexPath.row] else { return UITableViewCell() }
         cell.refrashMovie(item)
         return cell
     }
@@ -166,7 +174,7 @@ extension MovieViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let movie = movies?.results[indexPath.row] else { return }
+        guard let movie = movies?.movies[indexPath.row] else { return }
         let filmViewController = FilmViewController()
         filmViewController.film = movie
         navigationController?.pushViewController(filmViewController, animated: true)

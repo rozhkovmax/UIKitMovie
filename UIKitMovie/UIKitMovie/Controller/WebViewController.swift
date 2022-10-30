@@ -43,16 +43,13 @@ final class WebViewController: UIViewController {
         createWebView()
         createToolBar()
         createProgressView()
+        createProgressViewConstraint()
+        createWebViewConstraint()
+        createToolBarConstraint()
     }
 
     private func createProgressView() {
         view.addSubview(webProgressView)
-        webProgressView.translatesAutoresizingMaskIntoConstraints = false
-        webProgressView.leftAnchor.constraint(equalTo: webView.leftAnchor, constant: 140).isActive = true
-        webProgressView.rightAnchor.constraint(equalTo: webView.rightAnchor, constant: -100).isActive = true
-        webProgressView.bottomAnchor.constraint(equalTo: webView.bottomAnchor, constant: -23).isActive = true
-        webProgressView.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        webProgressView.centerXAnchor.constraint(equalTo: webView.centerXAnchor).isActive = true
         observer = webView.observe(\.estimatedProgress, options: [.new]) { _, _ in
             self.webProgressView.progress = Float(self.webView.estimatedProgress)
         }
@@ -60,26 +57,33 @@ final class WebViewController: UIViewController {
         webProgressView.trackTintColor = Constants.whiteCustomColor
     }
 
+    private func createProgressViewConstraint() {
+        webProgressView.translatesAutoresizingMaskIntoConstraints = false
+        webProgressView.leftAnchor.constraint(equalTo: webView.leftAnchor, constant: 140).isActive = true
+        webProgressView.rightAnchor.constraint(equalTo: webView.rightAnchor, constant: -100).isActive = true
+        webProgressView.bottomAnchor.constraint(equalTo: webView.bottomAnchor, constant: -23).isActive = true
+        webProgressView.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        webProgressView.centerXAnchor.constraint(equalTo: webView.centerXAnchor).isActive = true
+    }
+
     private func createWebView() {
         view.addSubview(webView)
-        webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        webView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        webView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         guard let url = URL(string: Constants.webTitleText) else { return }
         let request = URLRequest(url: url)
         webView.load(request)
         webView.navigationDelegate = self
     }
 
+    private func createWebViewConstraint() {
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        webView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        webView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        webView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+
     private func createToolBar() {
         view.addSubview(webToolBar)
-        webToolBar.translatesAutoresizingMaskIntoConstraints = false
-        webToolBar.leftAnchor.constraint(equalTo: webView.leftAnchor).isActive = true
-        webToolBar.rightAnchor.constraint(equalTo: webView.rightAnchor).isActive = true
-        webToolBar.bottomAnchor.constraint(equalTo: webView.bottomAnchor).isActive = true
-        webToolBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
         webToolBar.isTranslucent = false
         webToolBar.items = [
             goBackBarButtonItem,
@@ -92,6 +96,14 @@ final class WebViewController: UIViewController {
         refreshBarButtonItem.action = #selector(refreshItemAction)
         webToolBar.barTintColor = Constants.blackCustomColor
         webToolBar.tintColor = Constants.yellowCustomColor
+    }
+
+    private func createToolBarConstraint() {
+        webToolBar.translatesAutoresizingMaskIntoConstraints = false
+        webToolBar.leftAnchor.constraint(equalTo: webView.leftAnchor).isActive = true
+        webToolBar.rightAnchor.constraint(equalTo: webView.rightAnchor).isActive = true
+        webToolBar.bottomAnchor.constraint(equalTo: webView.bottomAnchor).isActive = true
+        webToolBar.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
     @objc private func goBackItemAction() {

@@ -1,9 +1,9 @@
-// NSMutableAttributedString.swift
+// NSMutableAttributedString+Extension.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
-// MARK: - NSMutableAttributedString
+// MARK: - Расширение для NSMutableAttributedString
 
 extension NSMutableAttributedString {
     var boldFont: UIFont { UIFont.boldSystemFont(ofSize: 18) }
